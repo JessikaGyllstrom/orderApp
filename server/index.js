@@ -11,9 +11,9 @@ const db = mysql.createPool({
     database: "crudSQL", 
 })
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
 app.post("/addbox", (req, res) => {
     const {receiverName} = req.body;
@@ -36,6 +36,7 @@ app.get("/listboxes", (req, res) => {
     const sqlSelect = "SELECT * FROM boxes";
     db.query(sqlSelect, (err, result) => {
         console.log(result);
+        res.send(result);
     })
 })
 

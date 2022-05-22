@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import Axios from 'axios';
 
-
 function App() {
   const [values, setValues] = useState();
   const [boxList, setBoxList] = useState([]);
 
   const handleChangedValues = (value) => {
+
     setValues((prevValue) => ({
       ...prevValue, 
       [value.target.name]: value.target.value, 
@@ -24,6 +24,31 @@ function App() {
       console.log("Success!");
     });
   };
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/listboxes")
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }) 
+
+
+  const showTableBtnClicked = () => {
+    /*
+    Axios.get("http://localhost:3001/listboxes")
+    .then(res => {
+      console.log(res);
+      console.log(res.data)
+    })
+    
+  .catch(error => console.log(error));
+
+
+  }*/
+  }
 
   return (
     <div className="container">
@@ -61,9 +86,14 @@ function App() {
             >
             Save
         </button>
+        <button 
+            onClick={() => showTableBtnClicked()} 
+            >
+            Show Table
+        </button>
       </form>   
     </div>
   );
-}
+  }
 
 export default App;
