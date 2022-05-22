@@ -27,6 +27,17 @@ app.post("/register", (req, res) => {
             res.send("Values inserted ");    
     }) 
 })
+app.get("/listboxes", (req, res)  => {
+    let SQL = "SELECT * from boxes";
+    db.query(SQL, (error, res) => {
+        if(error) {
+            console.log(err);
+        } else {
+            console.log(res);
+            res.send(res);
+        }
+    })
+})
 app.listen(3001, () => {
     console.log("Server running on port 3001");
 })

@@ -25,7 +25,8 @@ function App() {
 
   return (
     <div className="container">
-      <div className="form">
+      <form>
+        <h1>Boxinator</h1>
         <label>Name: </label>
           <input 
           type="text" 
@@ -44,13 +45,20 @@ function App() {
         />
 
         <label>Country: </label>
-          <select id="destinationCountry" name="destinationCountry"
+          <select 
+          id="destinationCountry" 
+          name="destinationCountry"
+          value="Sweden"
+          placeholder='select country...'
           onChange={handleChangedValues}
           >
+          <option value="default" disabled hidden>
+          Choose country
+          </option>
             <option value="Sweden">Sweden</option>
             <option value="China">China</option>
-            <option value="Fiat">Brazil</option>
-            <option value="Audi">Australia</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Australia">Australia</option>
           </select>
    
         <button 
@@ -58,8 +66,7 @@ function App() {
             >
             Save
         </button>
-      </div>
-    
+      </form>   
     </div>
   );
 }
