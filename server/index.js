@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const db = mysql.createPool({
     host: "localhost", 
@@ -12,9 +13,9 @@ const db = mysql.createPool({
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-
-app.post("/register", (req, res) => {
+app.post("/addbox", (req, res) => {
     const {receiverName} = req.body;
     const {weight} = req.body;
     const {boxcolor} = req.body;
@@ -23,21 +24,21 @@ app.post("/register", (req, res) => {
     const sqlInsert = "INSERT INTO boxes (receiverName, weight, boxcolor, destinationCountry ) VALUES (?, ?, ?, ?)";
 
     db.query(sqlInsert, [receiverName, weight, boxcolor, destinationCountry], (err, result) => {
-            console.log(err);
-            res.send("Values inserted ");    
+        console.log(result);
+        if(err) {
+            res.send(err);
+        } else {
+            res.send("Values inserted");    
+        }
     }) 
 })
-app.get("/listboxes", (req, res)  => {
-    let SQL = "SELECT * from boxes";
-    db.query(SQL, (error, res) => {
-        if(error) {
-            console.log(err);
-        } else {
-            console.log(res);
-            res.send(res);
-        }
+app.get("/listboxes", (req, res) => {
+    const sqlSelect = "SELECT * FROM boxes";
+    db.query(sqlSelect, (err, result) => {
+        console.log(result);
     })
 })
+
 app.listen(3001, () => {
     console.log("Server running on port 3001");
 })

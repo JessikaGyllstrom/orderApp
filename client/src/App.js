@@ -1,25 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Axios from 'axios';
 
+
 function App() {
   const [values, setValues] = useState();
-  console.log(values);
+  const [boxList, setBoxList] = useState([]);
+
   const handleChangedValues = (value) => {
     setValues((prevValue) => ({
       ...prevValue, 
       [value.target.name]: value.target.value, 
     }))
   };
- 
+
   const handleClickButton = () => {
-    Axios.post("http://localhost:3001/register",{
+    Axios.post("http://localhost:3001/addbox",{
     receiverName: values.receiverName, 
     weight: values.weight, 
     boxcolor: values.boxcolor, 
     destinationCountry: values.destinationCountry, 
-    }) .then((response) => {
-      console.log(response);
+    }) .then(() => {
+      console.log("Success!");
     });
   };
 
@@ -43,18 +45,11 @@ function App() {
         <input type="color" id="boxcolor" name="boxcolor"
           onChange={handleChangedValues}
         />
-
-        <label>Country: </label>
           <select 
           id="destinationCountry" 
           name="destinationCountry"
-          value="Sweden"
-          placeholder='select country...'
           onChange={handleChangedValues}
           >
-          <option value="default" disabled hidden>
-          Choose country
-          </option>
             <option value="Sweden">Sweden</option>
             <option value="China">China</option>
             <option value="Brazil">Brazil</option>
