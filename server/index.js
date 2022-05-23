@@ -20,10 +20,23 @@ app.post("/addbox", (req, res) => {
     const {weight} = req.body;
     const {boxcolor} = req.body;
     const {destinationCountry} = req.body;
-    
-    const sqlInsert = "INSERT INTO boxes (receiverName, weight, boxcolor, destinationCountry ) VALUES (?, ?, ?, ?)";
+    let {shippingCost} = req.body;
 
-    db.query(sqlInsert, [receiverName, weight, boxcolor, destinationCountry], (err, result) => {
+    if(destinationCountry==="Sweden") {
+        shippingCost = weight * 1.3;
+    } else if (destinationCountry==="China") {
+        shippingCost = weight * 4;
+    } else if (destinationCountry==="Brazil") {
+        shippingCost = weight * 8.6;
+    } else if (destinationCountry==="Australia") {
+        shippingCost = weight * 7.2;
+    } else {
+        console.log("Shippingcost Error");
+    }
+    
+    const sqlInsert = "INSERT INTO boxes (receiverName, weight, boxcolor, destinationCountry, shippingCost ) VALUES (?, ?, ?, ?, ?)";
+
+    db.query(sqlInsert, [receiverName, weight, boxcolor, destinationCountry, shippingCost], (err, result) => {
         console.log(result);
         if(err) {
             res.send(err);
@@ -39,7 +52,6 @@ app.get("/listboxes", (req, res) => {
         res.send(result);
     })
 })
-
 app.listen(3001, () => {
     console.log("Server running on port 3001");
 })

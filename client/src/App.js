@@ -20,6 +20,7 @@ function App() {
     weight: values.weight, 
     boxcolor: values.boxcolor, 
     destinationCountry: values.destinationCountry, 
+    shippingCost: 123,
     }) .then(() => {
       console.log("Success!");
     });
@@ -27,13 +28,10 @@ function App() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/listboxes")
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
+    .then((response) => {
+      setBoxList(response.data)
     });
-  }) 
+  }, []);
 
 
   const showTableBtnClicked = () => {
@@ -75,6 +73,7 @@ function App() {
           name="destinationCountry"
           onChange={handleChangedValues}
           >
+            <option value=""></option>
             <option value="Sweden">Sweden</option>
             <option value="China">China</option>
             <option value="Brazil">Brazil</option>
@@ -91,9 +90,37 @@ function App() {
             >
             Show Table
         </button>
-      </form>   
-    </div>
-  );
-  }
+        </form>  
+
+        <table>
+          <thead>
+            <tr>
+              <th>Receiver</th>
+              <th>Weight</th>
+              <th>Box Color</th>
+              <th>Shipping cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {boxList.map((val) => {
+          return (
+            <tr>
+              <td >{ val.receiverName }</td>
+              <td >{val.weight}</td>
+              <td 
+              style={{
+                backgroundColor: val.boxcolor
+              }}>
+              </td>
+              <td>{ val.shippingCost }</td>
+
+            </tr>
+          );
+        })}
+        </tbody>
+        </table>
+          
+        </div>
+  )}
 
 export default App;
