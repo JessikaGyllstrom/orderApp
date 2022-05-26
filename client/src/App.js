@@ -7,15 +7,13 @@ function App() {
   const [boxList, setBoxList] = useState([]);
 
   const handleChangedValues = (value) => {
-
     setValues((prevValue) => ({
       ...prevValue, 
       [value.target.name]: value.target.value, 
     }))
   };
-
   const handleClickButton = () => {
-    Axios.post("http://localhost:3001/addbox",{
+    Axios.post("http://localhost:8080/addbox",{
     receiverName: values.receiverName, 
     weight: values.weight, 
     boxcolor: values.boxcolor, 
@@ -25,29 +23,12 @@ function App() {
       console.log("Success!");
     });
   };
-
   useEffect(() => {
-    Axios.get("http://localhost:3001/listboxes")
+    Axios.get("http://localhost:8080/listboxes")
     .then((response) => {
       setBoxList(response.data)
     });
   }, []);
-
-
-  const showTableBtnClicked = () => {
-    /*
-    Axios.get("http://localhost:3001/listboxes")
-    .then(res => {
-      console.log(res);
-      console.log(res.data)
-    })
-    
-  .catch(error => console.log(error));
-
-
-  }*/
-  }
-
   return (
     <div className="container">
       <form>
@@ -79,19 +60,12 @@ function App() {
             <option value="Brazil">Brazil</option>
             <option value="Australia">Australia</option>
           </select>
-   
         <button 
             onClick={() => handleClickButton()} 
             >
             Save
         </button>
-        <button 
-            onClick={() => showTableBtnClicked()} 
-            >
-            Show Table
-        </button>
         </form>  
-
         <table>
           <thead>
             <tr>
@@ -102,25 +76,22 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {boxList.map((val) => {
+            {boxList.map((val, key) => {
           return (
-            <tr>
-              <td >{ val.receiverName }</td>
-              <td >{val.weight}</td>
+            <tr key={key}>
+              <td>{ val.receiverName }</td>
+              <td>{val.weight}</td>
               <td 
               style={{
                 backgroundColor: val.boxcolor
               }}>
               </td>
               <td>{ val.shippingCost }</td>
-
             </tr>
           );
         })}
         </tbody>
-        </table>
-          
-        </div>
+      </table>  
+    </div>
   )}
-
 export default App;
