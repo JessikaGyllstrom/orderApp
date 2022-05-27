@@ -35,23 +35,30 @@ function App() {
         <h1>Boxinator</h1>
         <label>Name: </label>
           <input 
-          type="text" 
+          type="name" 
           name="receiverName"
+          required
           onChange={handleChangedValues}
         />
         <label>Weight: </label>
         <input 
-          type="text" 
+          type="number" 
           name="weight"
+          min="1"
+          required
           onChange={handleChangedValues}
         />
         <label>Select box-color</label>
-        <input type="color" id="boxcolor" name="boxcolor"
+        <input type="color" 
+          id="boxcolor" 
+          name="boxcolor"
+          required
           onChange={handleChangedValues}
         />
           <select 
           id="destinationCountry" 
           name="destinationCountry"
+          required
           onChange={handleChangedValues}
           >
             <option value=""></option>

@@ -25,10 +25,13 @@ app.post("/addbox", (req, res) => {
 
     if(destinationCountry==="Sweden") {
         shippingCost = weight * 1.3;
+        shippingCost= shippingCost.toFixed(2)
     } else if (destinationCountry==="China") {
         shippingCost = weight * 4;
+        shippingCost= shippingCost.toFixed(2)
     } else if (destinationCountry==="Brazil") {
         shippingCost = weight * 8.6;
+        shippingCost= shippingCost.toFixed(2)
     } else if (destinationCountry==="Australia") {
         shippingCost = weight * 7.2;
         shippingCost= shippingCost.toFixed(2)
